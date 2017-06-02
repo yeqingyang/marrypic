@@ -1,0 +1,121 @@
+@-webkit-keyframes moveIconUp {
+	0% { -webkit-transform: translateY(100%); opacity:0;}
+	50% { -webkit-transform: translateY(0%); opacity:1;}
+	100% { -webkit-transform: translateY(-100%); opacity:0;}
+}
+@keyframes moveIconUp {
+	0% { -webkit-transform: translateY(100%); transform: translateY(100%); opacity:0;}
+	50% { -webkit-transform: translateY(0%); transform: translateY(0%); opacity:1;}
+	100% { -webkit-transform: translateY(-100%); transform: translateY(-100%); opacity:0;}
+}
+@-webkit-keyframes moveToBottom {
+	from { }
+	to { -webkit-transform: translateY(100%); }
+}
+@keyframes moveToBottom {
+	from { }
+	to { -webkit-transform: translateY(100%); transform: translateY(100%); }
+}
+/*音乐按钮动画*/
+
+@-webkit-keyframes moveRo {
+    from {-webkit-transform: rotate(360deg);  }
+    to { -webkit-transform: rotate(-360deg); }
+}
+@keyframes moveRo {
+    from {  transform: rotate(-360deg)}
+    to {  transform: rotate(360deg); }
+}
+
+@-webkit-keyframes openRo {
+    from { }
+    to { -webkit-transform: translateY(100%)
+    ;}
+}
+@keyframes openRo {
+    from { }
+    to { -webkit-transform: translateY(100%) ; transform: translateY(100%);
+
+    }
+}
+
+/*小音符动画*/
+
+@-webkit-keyframes openIconRo {
+    0% { -webkit-transform: translateY(100%); opacity:0;}
+    50% { -webkit-transform: translateY(0%); opacity:0.5;}
+    100% { -webkit-transform: translateY(-100%); opacity:0;}
+}
+@keyframes openIconRo {
+    0% { -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+        opacity:0;
+    }
+    50% { -webkit-transform: translateY(0%); transform: translateY(0%); opacity:0.5;}
+    100% { -webkit-transform: translateY(-100%); transform: translateY(-100%); opacity:0;}
+}
+
+/*结尾 ----------------*/
+/*音乐*/
+.music{
+    position: absolute;
+    z-index: 1111;
+    left: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+.open{
+    /*-webkit-animation: moveIconRo ease 3.5s both infinite;*/
+    -webkit-animation: moveRo linear 3.5s  infinite;
+    animation-delay:0;
+}
+.icon-music{
+    width: 25px;
+    height: 25px;
+    background: url(/pic/images/icon-muisc.png);
+    background-size: 100% 100%;
+    display: block;
+}
+.music-span{
+    position: absolute;
+    top: -5px;
+    left: 6px;
+    width: 12px;
+    height: 12px;
+    background: url(/pic/images/music-span.png);
+    background-size: 100% 100%;
+    -webkit-animation: openIconRo ease 1.2s both infinite;
+    animation: openRo ease 1.2s both infinite;
+    z-index: -1;
+}
+
+
+.music_text{
+    color: #000;
+    margin-left: 5px;
+    font-size: 20px;
+    opacity: 0;
+}
+
+@keyframes show_hide{
+    from{
+        opacity: 0;
+    }to{
+         opacity: 1;
+     }
+}
+@-webkit-keyframes show_hide{
+    from{
+        opacity: 0;
+    }to{
+         opacity: 1;
+     }
+}
+
+.show_hide{
+    animation: show_hide 1s linear infinite alternate;
+    -webkit-animation: show_hide 1s linear infinite alternate;
+}
+.xin_info{
+    opacity: 0;
+}

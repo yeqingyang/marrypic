@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title>万能账户追加金额计算器</title>
+	<meta charset="utf-8">
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap-flex.min.css" rel="stylesheet" > -->
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	
+	<style>
+            /*web background*/
+            .container{
+                display:table;
+                height:100%;
+            }
+
+            .row{
+  				border-top: 1px;
+  				border-bottom: 1px;
+  				padding-top: 5px;
+  				padding-bottom: 5px;
+  				margin-bottom: 1px;
+  				margin-top: 1px;
+            }
+
+            .no-left{
+            	padding-left: 1px;
+            	padding-right: 1px;
+            }
+
+            .bottom-line{
+            	border-bottom-style: solid;
+            	border-bottom-color: #F0F0F0;
+            }
+          
+            .row-sm-heigt {
+                height: 1vh;
+            }
+            .inner {
+            	vertical-align: middle !important;
+            }
+            p {
+            	margin-bottom: 0px;
+            }
+            .big-text {
+            	font-size:4vw;
+            }
+            .slim-heigt {
+            	padding-top: 0px;
+  				padding-bottom: 0px;
+            }
+    </style>
+</head>
+<body>
+<div class="container center-block col-xs-12">
+	<div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">万能账户追加金额计算器</h3>
+            </div>
+            <div class="panel-body">
+		        <div class="row center-block bottom-line">
+				<div class="col-xs-6"><p>万能账户类型</p></div>
+			    <div class="col-xs-6">
+				    <select class="form-control" id="A" onchange="selectOnChange(this)">
+			      		<option value=1>太平金</option>
+			      		<option value=2>太平钻</option>
+			      		<option value=3>幸福金</option>
+			      		<option value=4>财富金</option>
+			      		<option value=5>财富钻</option>
+			      		<option value=4>富贵金</option>
+			      		<option value=5>富贵钻</option>
+			    	</select>
+		    	</div>
+			</div>
+			<div class="row center-block bottom-line">
+				<div class="col-xs-6"><p>万能账户已有账户价值</p></div>
+			    <div class="col-xs-5"><input type="number" class="form-control" id="B" value=0></div>
+			    <div class="col-xs-1 no-left"><p>元</p></div>
+			</div>
+			<div class="row center-block bottom-line">
+				<div class="col-xs-6"><p>关联产品中期交产品每年年交保费</p></div>
+			    <div class="col-xs-5"><input type="number" class="form-control" id="C" value=0></div>
+			    <div class="col-xs-1 no-left"><p>元</p></div>
+			</div>
+			<div class="row center-block">
+				<div class="col-xs-6"><p>关联产品中趸交产品趸交保费</p></div>
+			    <div class="col-xs-5"><input type="number" class="form-control" id="D" value=0></div>
+			    <div class="col-xs-1 no-left"><p>元</p></div>
+			</div>
+			<div class="row center-block">
+			    <div class="col-xs-12">
+			    	<button type="button" class="btn btn-info btn-block slim-heigt" onclick="count()"><h5>计算</h5></button>
+			    </div>
+			</div>
+			<div class="row center-block row-sm-heigt">
+			</br>
+			</div>
+			<div class="row center-block bottom-line" >
+			    <div class="col-xs-6">
+			    	<p>万能账户尚可追加的金额</p>
+			    </div>
+			    <div class="col-xs-5">
+			    	<p class="bg-success" id="result1" ></p>
+			    </div>
+			    <div class="col-xs-1 no-left"><p>元</p></div>
+			</div>
+			
+			<div class="row center-block">
+				<div class="col-xs-12">
+					<small>
+					关于关联产品：</br>
+					①已新增该万能账户的产品</br>
+					②已授权生存金转入该万能账户的产品，且授权的产品与该万能账户为同一投保人</br>
+					③关联产品状态为有效</br>
+					④关联产品未操作过减额缴清</br>
+					</small>
+				</div>
+			</div>
+            </div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+	var rate1 = 0.95
+	var rate2 = 0.97
+
+	var constant1 = 1000
+	var constant2 = 20000
+	var constant3 = 10000
+	var constant4 = 12000
+
+	selectOnChange(document.getElementById("A"));
+	function selectOnChange(obj) {
+		console.log(obj.value);
+		if (obj.value <= 3) {
+			$("#C").attr("disabled",true); 
+			$("#D").attr("disabled",true); 
+			$("#C").val(0); 
+			$("#D").val(0); 
+		} else {
+			$("#C").attr("disabled",false); 
+			$("#D").attr("disabled",false); 
+		}
+	}
+
+	function count() {
+		var a = Number(document.getElementById("A").value);
+		var b = Number(document.getElementById("B").value);
+		var c = Number(document.getElementById("C").value);
+		var d = Number(document.getElementById("D").value);
+
+		if (a == 1) {
+			document.getElementById("result1").innerHTML = count1(b);
+		} else if (a == 2){
+			document.getElementById("result1").innerHTML = count2(b);
+		} else if (a == 3){
+			document.getElementById("result1").innerHTML = count3(b);
+		} else if (a == 4){
+			document.getElementById("result1").innerHTML = count4(b, c, d);
+		} else if (a == 5){
+			document.getElementById("result1").innerHTML = count5(b, c, d);
+		}
+
+	}
+
+	function count1(b) {
+		var midValue = (constant2 - b)/rate1;
+		if (midValue <= constant3) {
+			return 0
+		}
+		return Math.floor(midValue / constant1) * constant1;
+	}
+
+	function count2(b) {
+		var midValue = (constant2 - b)/rate1;
+		if (midValue <= constant3) {
+			return 0
+		}
+		return Math.floor(midValue / constant3) * constant3;
+	}
+
+	function count3(b) {
+		var midValue = (constant2 - b)/rate2;
+		if (midValue <= constant4) {
+			return 0
+		}
+		return Math.floor(midValue / constant1) * constant1;
+	}
+
+	function count4(b, c, d) {
+		var midValue = (c * 2 + d - b)/rate2;
+		if (midValue <= constant3) {
+			return 0
+		}
+		return Math.floor(midValue / constant1) * constant1;
+	}
+	function count5(b, c, d) {
+		var midValue = (c * 2 + d - b)/rate2;
+		if (midValue <= constant3) {
+			return 0
+		}
+		return Math.floor(midValue / constant3) * constant3;
+	}
+</script>
+</body>
+</html>
